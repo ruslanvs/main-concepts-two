@@ -4,6 +4,43 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+{// Conditional rendering
+  class UserGreeting extends React.Component {
+    render() {
+      return (
+        <h1>Welcome back!</h1>
+      );
+    }
+  }
+  
+  class GuestGreeting extends React.Component {
+    render() {
+      return (
+        <h1>Please sign up</h1>
+      );
+    }
+  }
+
+  class Greeting extends React.Component {
+    constructor(props) {
+      super(props);
+      this.isLoggedIn = props.isLoggedIn;
+    }
+
+    render() {
+      const Value = this.isLoggedIn ? UserGreeting : GuestGreeting
+      return <Value />
+    }
+  }
+
+  ReactDOM.render(
+    <Greeting isLoggedIn={false}/>,
+    document.getElementById('root')
+  )
+
+}
+
+/*
 {
   class Toggle extends React.Component {
     constructor(props) {
