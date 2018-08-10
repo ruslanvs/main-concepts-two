@@ -4,39 +4,110 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-{// Conditional rendering
-  class UserGreeting extends React.Component {
-    render() {
-      return (
-        <h1>Welcome back!</h1>
-      );
-    }
+{
+
+  function LoginButton(props) {
+    return (
+      <button onClick={props.onClick}>Login</button>
+    );
   }
   
-  class GuestGreeting extends React.Component {
-    render() {
-      return (
-        <h1>Please sign up</h1>
-      );
-    }
+  function LogoutButton(props) {
+    return (
+      <button onClick={props.onClick}>Logout</button>
+    );
   }
-
-  class Greeting extends React.Component {
+  
+  class LoginControl extends React.Component {
     constructor(props) {
       super(props);
-      this.isLoggedIn = props.isLoggedIn;
+      this.handleLoginClick = this.handleLoginClick.bind(this);
+      this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      this.state = {isLoggedIn: false};
     }
-
+  
+    handleLoginClick() {
+      this.setState({isLoggedIn: true});
+    }
+  
+    handleLogoutClick() {
+      this.setState({isLoggedIn: false});
+    }
+  
     render() {
-      const Value = this.isLoggedIn ? UserGreeting : GuestGreeting
-      return <Value />
+      const isLoggedIn = this.state.isLoggedIn;
+      let button;
+  
+      if(isLoggedIn) {
+        button = <LogoutButton onClick={this.handleLogoutClick} />;
+      } else {
+        button = <LoginButton onClick={this.handleLoginClick} />;
+      }
+  
+      return (
+        <div>
+          <Greeting isLoggedIn={isLoggedIn} />
+          {button}
+        </div>
+      )
     }
   }
 
   ReactDOM.render(
-    <Greeting isLoggedIn={false}/>,
+    <LoginControl />,
     document.getElementById('root')
   )
+// }
+
+// {// Conditional rendering
+  // class UserGreeting extends React.Component {
+  //   render() {
+  //     return (
+  //       <h1>Welcome back!</h1>
+  //     );
+  //   }
+  // }
+  
+  // class GuestGreeting extends React.Component {
+  //   render() {
+  //     return (
+  //       <h1>Please sign up</h1>
+  //     );
+  //   }
+  // }
+
+  function UserGreeting(props) {
+    return <h1>Welcome back!</h1>;
+  }
+  
+  function GuestGreeting(props) {
+    return <h1>Please sign up.</h1>;
+  }
+
+  function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+      return <UserGreeting />;
+    }
+    return <GuestGreeting />;
+  }
+
+  // class Greeting extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     this.isLoggedIn = props.isLoggedIn;
+  //   }
+
+  //   render() {
+  //     const Value = this.isLoggedIn ? UserGreeting : GuestGreeting
+  //     return <Value />
+  //   }
+  // }
+
+  // ReactDOM.render(
+  //   <Greeting isLoggedIn={false}/>,
+  //   document.getElementById('root')
+  // )
 
 }
 
